@@ -44,8 +44,12 @@ def message_receive_event_handler(req_data: MessageReceiveEvent):
     open_id = sender_id.open_id
     text_content = message.content
     # echo text message
-    # message_api_client.send_text_with_open_id(open_id, text_content)
-    message_api_client.send_chatgpt_answer(open_id, text_content)
+    if text_content.lower() in "chatgpt":
+        logging.debug("命中chatGPT")
+        message_api_client.send_chatgpt_answer(open_id, text_content)
+    else:
+        logging.debug("未命中chatGPT")
+        message_api_client.send_text_with_open_id(open_id, text_content)
     return jsonify()
 
 
