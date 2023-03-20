@@ -29,7 +29,7 @@ class MessageApiClient(object):
     def send_text_with_open_id(self, open_id, content):
         data = json.loads(content)
         if 'text' in data.keys():
-            self.send("open_id", open_id, "text", {"text": "你说的是%s吗？" % data["text"]})
+            self.send("open_id", open_id, "text", "\"text\": \"你说的是%s吗？" % data["text"])
         else:
             self.send("open_id", open_id, "text", content)
 
