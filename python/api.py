@@ -1,4 +1,5 @@
 #! /usr/bin/env python3.8
+import json
 import os
 import logging
 import requests
@@ -26,16 +27,18 @@ class MessageApiClient(object):
         return self._tenant_access_token
 
     def send_text_with_open_id(self, open_id, content):
-        if 'text' in content.keys():
-            self.send("open_id", open_id, "text", {"text": "你说的是%s吗？" % content["text"]})
+        data = json.loads(content)
+        if 'text' in data.keys():
+            self.send("open_id", open_id, "text", {"text": "你说的是%s吗？" % data["text"]})
         else:
             self.send("open_id", open_id, "text", content)
 
     def send_chatgpt_answer(self, open_id, question):
         logging.debug(f"OpenID: {open_id}")
         logging.debug(f"入参:{question}")
-        logging.debug("question:%s" % question["text"])
-        self.send("open_id", open_id, "text", get_chaggpt_ans(question["text"]))
+        data = json.loads(question)
+        logging.debug("question:%s" % data["text"])
+        self.send("open_id", open_id, "text", get_chaggpt_ans(data["text"]))
 
     def send(self, receive_id_type, receive_id, msg_type, content):
         # send message to user, implemented based on Feishu open api capability. doc link: https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/reference/im-v1/message/create
