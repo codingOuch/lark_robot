@@ -26,7 +26,7 @@ class MessageApiClient(object):
         return self._tenant_access_token
 
     def send_text_with_open_id(self, open_id, content):
-        self.send("open_id", open_id, "text", content)
+        self.send("open_id", open_id, "text", f"你说的是{content}吗")
 
     def send_chatgpt_answer(self, open_id, question):
         logging.debug(f"OpenID: {open_id}")
