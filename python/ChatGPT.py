@@ -2,9 +2,11 @@
 # @Author : haowen.zhu
 # @Time : 2023/3/18 23:21
 # @File : ChatGPT.py
-
+import logging
 import requests
 import json
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 def get_chaggpt_ans(question):
@@ -26,12 +28,14 @@ def get_chaggpt_ans(question):
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
     # 将字符串解析为字典
     data = json.loads(response.text)
-
-    # 访问content中的数据
-    content = data["choices"][0]["message"]["content"]
+    if response.status_code == 200:
+        logging.debug("response.text")
+        # 访问content中的数据
+        content = data["choices"][0]["message"]["content"]
+    else:
+        content = f"resp error: {response.status_code}"
 
     print(content)
     return content

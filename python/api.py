@@ -4,6 +4,8 @@ import logging
 import requests
 from ChatGPT import get_chaggpt_ans
 
+logging.basicConfig(level=logging.DEBUG)
+
 APP_ID = os.getenv("APP_ID")
 APP_SECRET = os.getenv("APP_SECRET")
 
@@ -27,6 +29,8 @@ class MessageApiClient(object):
         self.send("open_id", open_id, "text", content)
 
     def send_chatgpt_answer(self, open_id, question):
+        logging.debug(open_id)
+        logging.debug(question)
         self.send("open_id", open_id, "text", get_chaggpt_ans(question))
 
     def send(self, receive_id_type, receive_id, msg_type, content):
