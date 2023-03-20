@@ -31,7 +31,7 @@ def get_chaggpt_ans(question):
     # 将字符串解析为字典
     data = json.loads(response.text)
     if response.status_code == 200:
-        logging.debug("response.text")
+        logging.debug(f"chatGPT返回：{response.text}")
         # 访问content中的数据
         content = data["choices"][0]["message"]["content"]
     else:
