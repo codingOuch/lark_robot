@@ -2,6 +2,7 @@
 import os
 import logging
 import requests
+from ChatGPT import get_chaggpt_ans
 
 APP_ID = os.getenv("APP_ID")
 APP_SECRET = os.getenv("APP_SECRET")
@@ -24,6 +25,9 @@ class MessageApiClient(object):
 
     def send_text_with_open_id(self, open_id, content):
         self.send("open_id", open_id, "text", content)
+
+    def send_chatgpt_answer(self, open_id, question):
+        self.send("open_id", open_id, "text", get_chaggpt_ans(question))
 
     def send(self, receive_id_type, receive_id, msg_type, content):
         # send message to user, implemented based on Feishu open api capability. doc link: https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/reference/im-v1/message/create
